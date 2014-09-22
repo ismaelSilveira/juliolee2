@@ -5,12 +5,17 @@ public class ClasificadorPelotas {
 	public static int NADA = 0;
 	public static int AZUL = 1;
 	public static int NARANJA = 2;
+	private int color_sensado;
 	
 	public ClasificadorPelotas(ColorSensor cs) {
 		sensor = cs;
 	}
 	
-	public int getColor () {
-		return (int) (Math.random() * 3) + 1;
+	public void getColor () {
+		color_sensado = 1;
+	}
+	
+	public int getSensado(){
+		return color_sensado;
 	}
 }
