@@ -15,7 +15,7 @@ public class JulioLee2 {
 		
 		// Inicializacion de comportamientos
 		Behavior sensar = new Sensar(clasificador, Motor.A);
-		Behavior patear = new Patear(clasificador, Motor.C);
+		Behavior patear = new Patear(clasificador, Motor.A, Motor.C);
 		Behavior[] comportamientos = { sensar, patear};
 				
 		Arbitrator arbitro = new Arbitrator(comportamientos);

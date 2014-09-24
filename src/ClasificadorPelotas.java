@@ -11,11 +11,16 @@ public class ClasificadorPelotas {
 		sensor = cs;
 	}
 	
-	public void getColor () {
-		color_sensado = 1;
+	public int getColor () {
+		color_sensado = 2;
+		return color_sensado;
 	}
 	
 	public int getSensado(){
 		return color_sensado;
+	}
+	
+	public void resetSensado(){
+		color_sensado = 0;
 	}
 }
