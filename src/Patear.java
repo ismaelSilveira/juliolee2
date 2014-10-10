@@ -21,6 +21,7 @@ public class Patear implements Behavior {
 	@Override
 	public void action() {
 		// Acomodo el sensor
+		motor_sensor.setSpeed(300);
 		motor_sensor.rotateTo(-80);
 		
 		// Acomodo el pateador
@@ -30,12 +31,12 @@ public class Patear implements Behavior {
 		//Pateo, si es naranja fuerte y si es azul despacio
 		if(clasificador.getSensado() == ClasificadorPelotas.NARANJA)
 			motor_pateador.setSpeed(900);
-		try {
-			Thread.sleep(1000);
+	/*	try {
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		motor_pateador.rotateTo(20);
 		
 		// Vuelvo el pateador a la posicion inical

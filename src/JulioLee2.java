@@ -20,7 +20,7 @@ public class JulioLee2 {
 				
 		Arbitrator arbitro = new Arbitrator(comportamientos);
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 		} catch (Exception e) {
 		}
 		LCD.drawString("Arranca", 0, 0);

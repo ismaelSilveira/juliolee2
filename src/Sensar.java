@@ -10,7 +10,7 @@ public class Sensar implements Behavior {
 		this.clasificador = clasificador;
 		this.motor_sensor = motor_sensor;	
 		motor_sensor.resetTachoCount();
-		motor_sensor.setSpeed(300);
+		motor_sensor.setSpeed(200);
 		motor_sensor.rotateTo(-4);
 	}
 
@@ -23,7 +23,9 @@ public class Sensar implements Behavior {
 	@Override
 	public void action() {
 		// Se mueve el brazo del sensor a la posicion de sensar
-		motor_sensor.rotateTo(0);
+		motor_sensor.setSpeed(200);
+		motor_sensor.setAcceleration(3000);
+		motor_sensor.rotateTo(1);
 		
 		// Sensa y si es NADA acomoda el brazo para caminar y sigue
 		int color = clasificador.getColor();
