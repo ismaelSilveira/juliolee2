@@ -42,17 +42,19 @@ public class JulioLee2 {
 		while(true){
 			fin = false;
 		//	LCD.drawString("ESPERANDO CONEXION", 0, 0);
-			clasificadorDummy = clasificador.NARANJA;
+			clasificadorDummy = ClasificadorPelotas.NARANJA;
 			conn = conector.waitForConnection(0, NXTConnection.PACKET);
 		//	LCD.drawString("TIENE CONEXION", 1, 0);
 			//Sound.twoBeeps();
 			dis = conn.openDataInputStream();
 			dos = conn.openDataOutputStream();
-
+			
+			int color = 0;
+			
 			while (!fin) {
 				try {
 					lectura = dis.readInt();
-					
+
 					if(lectura == SENSAR){
 						// Se mueve el brazo del sensor a la posicion de sensar
 						motor_sensor.setSpeed(200);
@@ -60,7 +62,7 @@ public class JulioLee2 {
 						motor_sensor.rotateTo(1);
 						
 						// Sensa y si es NADA acomoda el brazo para caminar y sigue
-						int color = clasificadorDummy;//clasificador.getColor();
+						color = clasificadorDummy;//clasificador.getColor();
 						if(color == ClasificadorPelotas.NADA){
 							motor_sensor.rotateTo(-4);
 							// Termino la conexion
@@ -80,12 +82,15 @@ public class JulioLee2 {
 						motor_sensor.rotateTo(-80);
 
 						// Acomodo el pateador
-						motor_pateador.setSpeed(100);
+						motor_pateador.setSpeed(300);
 						motor_pateador.rotateTo(-36);
 
 						// Pateo, si es naranja fuerte y si es azul despacio
-						if (clasificador.getSensado() == ClasificadorPelotas.NARANJA)
+						if (color == ClasificadorPelotas.NARANJA){
+							Sound.beep();
 							motor_pateador.setSpeed(900);
+						}
+							
 
 						motor_pateador.rotateTo(20);
 
