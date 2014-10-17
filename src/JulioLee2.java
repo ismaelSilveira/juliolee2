@@ -36,14 +36,20 @@ public class JulioLee2 {
 		motor_sensor.rotateTo(-4);
 		NXTRegulatedMotor motor_pateador = Motor.C;
 		motor_pateador.resetTachoCount();
+		int clasificadorDummy;
+		boolean fin;
 		
 		while(true){
+			fin = false;
+			LCD.drawString("ESPERANDO CONEXION", 0, 0);
+			clasificadorDummy = clasificador.NARANJA;
 			conn = conector.waitForConnection(0, NXTConnection.PACKET);
-			Sound.twoBeeps();
+			LCD.drawString("TIENE CONEXION", 1, 0);
+			//Sound.twoBeeps();
 			dis = conn.openDataInputStream();
 			dos = conn.openDataOutputStream();
 
-			while (true) {
+			while (!fin) {
 				try {
 					lectura = dis.readInt();
 					
@@ -54,16 +60,13 @@ public class JulioLee2 {
 						motor_sensor.rotateTo(1);
 						
 						// Sensa y si es NADA acomoda el brazo para caminar y sigue
-						int color = clasificador.getColor();
-						try {
-							Thread.sleep(5000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						int color = clasificadorDummy;//clasificador.getColor();
+						clasificadorDummy = 0;
 						if(color == ClasificadorPelotas.NADA){
 							motor_sensor.rotateTo(-4);
 							// Termino la conexion
+							LCD.drawString("NADA", 2, 0);
+							fin = true;
 							break;
 						}
 						
@@ -96,11 +99,13 @@ public class JulioLee2 {
 						dos.writeInt(PATEAR);
 						dos.flush();
 					}else{
+						fin = true;
 						break;
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					fin = true;
 					break;
 				}
 			}
@@ -111,6 +116,7 @@ public class JulioLee2 {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				fin = true;
 				break;
 			}
 
