@@ -41,10 +41,10 @@ public class JulioLee2 {
 		
 		while(true){
 			fin = false;
-			LCD.drawString("ESPERANDO CONEXION", 0, 0);
+		//	LCD.drawString("ESPERANDO CONEXION", 0, 0);
 			clasificadorDummy = clasificador.NARANJA;
 			conn = conector.waitForConnection(0, NXTConnection.PACKET);
-			LCD.drawString("TIENE CONEXION", 1, 0);
+		//	LCD.drawString("TIENE CONEXION", 1, 0);
 			//Sound.twoBeeps();
 			dis = conn.openDataInputStream();
 			dos = conn.openDataOutputStream();
@@ -61,18 +61,19 @@ public class JulioLee2 {
 						
 						// Sensa y si es NADA acomoda el brazo para caminar y sigue
 						int color = clasificadorDummy;//clasificador.getColor();
-						clasificadorDummy = 0;
 						if(color == ClasificadorPelotas.NADA){
 							motor_sensor.rotateTo(-4);
 							// Termino la conexion
 							LCD.drawString("NADA", 2, 0);
 							fin = true;
 							break;
+						}else{
+							// Le devuelvo el color sensado si es azul o naranja
+							dos.writeInt(color);
+							dos.flush();
 						}
 						
-						// Le devuelvo el color sensado si es azul o naranja
-						dos.writeInt(clasificador.getSensado());
-						dos.flush();
+						clasificadorDummy = 0;
 					}else if(lectura == PATEAR){
 						// Acomodo el sensor
 						motor_sensor.setSpeed(300);
@@ -93,7 +94,7 @@ public class JulioLee2 {
 						motor_pateador.rotateTo(-2);
 
 						// Reseteo el sensor de color
-						clasificador.resetSensado();
+				//		clasificador.resetSensado();
 						
 						// Le aviso que termine
 						dos.writeInt(PATEAR);
