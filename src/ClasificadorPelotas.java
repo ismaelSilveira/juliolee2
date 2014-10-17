@@ -23,8 +23,8 @@ public class ClasificadorPelotas {
 	// mediciones.
 	// Ademas los numeros van de 0 a 100 en lugar de 0 a 1 para evitar errores
 	// de redondeo.
-	private int[][] probabilidades_ocurrencia = { { 44, 0, 99, 4, 12 }, // G > R
-																		// > B
+	private int[][] probabilidades_ocurrencia = { 
+			{ 44, 0, 99, 4, 12 }, // G > R > B
 			{ 0, 95, 100, 11, 100 }, // B < 120
 			{ 95, 2, 1, 99, 45 }, // (B + G)/2 > R
 			{ 95, 96, 1, 54, 42 }, // |G - R| > |B - R|
