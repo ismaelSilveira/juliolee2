@@ -2,11 +2,11 @@ import lejos.nxt.ColorSensor;
 import lejos.nxt.ColorSensor.Color;
 
 public class ClasificadorPelotas {
-	private ColorSensor sensor;
-	public static int NADA = 0;
-	public static int AZUL = 1;
-	public static int NARANJA = 2;
+	public final static int NADA = 0;
+	public final static int AZUL = 1;
+	public final static int NARANJA = 2;
 	private int color_sensado;
+	private ColorSensor sensor_color;
 	private Propiedad[] propiedades;
 	// La siguiente es una tabla de probabilidades de que los vectores (R,G,B)
 	// de cada clase verifiquen las propiedades que se chequearan.
@@ -21,22 +21,22 @@ public class ClasificadorPelotas {
 	// devuelto por el sensor cumpla |G - R| > |B - R|, en ausencia de pelotas.
 	// Esas probabilidades se estimaron experimentalmente de una muestra de
 	// mediciones.
-	// Ademas los numeros van de 0 a 100 en lugar de 0 a 1 para evitar errores
+	// Ademas los numeros van de 0 a 10 en lugar de 0 a 1 para evitar errores
 	// de redondeo.
-	private int[][] probabilidades_ocurrencia = { 
-			{ 44, 0, 99, 4, 12 }, // G > R > B
-			{ 0, 95, 100, 11, 100 }, // B < 120
-			{ 95, 2, 1, 99, 45 }, // (B + G)/2 > R
-			{ 95, 96, 1, 54, 42 }, // |G - R| > |B - R|
-			{ 99, 0, 99, 54, 39 }, // G > B
-			{ 99, 0, 99, 99, 33 }, // G > R
-			{ 98, 0, 75, 42, 0 }, // G > 150
-			{ 7, 17, 0, 99, 100 }, // |G - B| < 19
-			{ 0, 0, 0, 0, 100 } // B < 30
+	private double[][] probabilidades_ocurrencia = { 
+			{ 4.4, 0, 9.9, 0.4, 1.2 }, // G > R > B
+			{ 0, 9.5, 10, 1.1, 10 }, // B < 120
+			{ 9.5, 0.2, 0.1, 9.9, 4.5 }, // (B + G)/2 > R
+			{ 9.5, 9.6, 0.1, 5.4, 4.2 }, // |G - R| > |B - R|
+			{ 9.9, 0, 9.9, 5.4, 3.9 }, // G > B
+			{ 9.9, 0, 9.9, 9.9, 3.3 }, // G > R
+			{ 9.8, 0, 7.5, 4.2, 0 }, // G > 150
+			{ 0.7, 1.7, 0, 9.9, 10 }, // |G - B| < 19
+			{ 0, 0, 0, 0, 10 } // B < 30
 	};
 
 	public ClasificadorPelotas(ColorSensor cs) {
-		sensor = cs;
+		sensor_color = cs;
 		propiedades = new Propiedad[9];
 		propiedades[0] = new GMayorRMayorB();
 		propiedades[1] = new BMenor120();
@@ -50,11 +50,7 @@ public class ClasificadorPelotas {
 	}
 
 	public int getColor() {
-		Color color = sensor.getColor();
-		int R = color.getRed();
-		int G = color.getGreen();
-		int B = color.getBlue();
-		switch (clasificarRGB(R, G, B)) {
+		switch (clasificarRGB()) {
 		case 0: // Celeste
 		case 1: // Azul
 			color_sensado = AZUL;
@@ -69,7 +65,7 @@ public class ClasificadorPelotas {
 		return color_sensado;
 	}
 
-	private int clasificarRGB(int R, int G, int B) {
+	private int clasificarRGB() {
 		// El algoritmo de clasificación inicia asumiendo que el color medido
 		// puede pertenecer a cualquier
 		// categoría con la misma probabilidad. Para esto se le asigna un mismo
@@ -81,13 +77,18 @@ public class ClasificadorPelotas {
 		// medida pertenezca a cada una de las categorías, porque los eventos
 		// que se están midiendo no son
 		// independientes (por ejemplo B < 30 => B < 120).
+		
+		Color color = sensor_color.getColor();
+		int R = color.getRed();
+		int G = color.getGreen();
+		int B = color.getBlue();
 
-		int[] pesos = { 1, 1, 1, 1, 1 }; // Ponderaciones iniciales
+		double[] pesos = { 1, 1, 1, 1, 1 }; // Ponderaciones iniciales
 
 		// Pondero de acuerdo a las probabilidades de que cumpla cada
 		// propiedad...
 		for (int i = 0, len = propiedades.length; i < len; i++) {
-			int[] probabilidades_prop = probabilidades_ocurrencia[i];
+			double[] probabilidades_prop = probabilidades_ocurrencia[i];
 			if (propiedades[i].verifica(R, G, B)) {
 				// ... para cada categoria
 				for (int j = 0, len2 = probabilidades_prop.length; j < len2; j++) {
@@ -97,20 +98,20 @@ public class ClasificadorPelotas {
 				// La probabilidad de que no se cumpla la propiedad es el
 				// complemento
 				for (int j = 0, len2 = probabilidades_prop.length; j < len2; j++) {
-					pesos[j] *= 100 - probabilidades_prop[j];
+					pesos[j] *= 10 - probabilidades_prop[j];
 				}
 			}
 		}
-		
+
 		int indice_maximo = 0;
-		int maximo = 0;
+		double maximo = 0;
 		for (int i = 0, len = pesos.length; i < len; i++) {
 			if (maximo < pesos[i]) {
 				indice_maximo = i;
 				maximo = pesos[i];
 			}
 		}
-			
+
 		return indice_maximo;
 	}
 
