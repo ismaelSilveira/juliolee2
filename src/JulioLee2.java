@@ -82,12 +82,12 @@ public class JulioLee2 {
 						motor_sensor.rotateTo(-80);
 
 						// Acomodo el pateador
-						motor_pateador.setSpeed(300);
-						motor_pateador.rotateTo(-36);
+						motor_pateador.setSpeed(25);
+						motor_pateador.rotateTo(-40);
 
 						// Pateo, si es naranja fuerte y si es azul despacio
 						if (color == ClasificadorPelotas.NARANJA){
-							Sound.beep();
+							//Sound.beep();
 							motor_pateador.setSpeed(900);
 						}
 							
