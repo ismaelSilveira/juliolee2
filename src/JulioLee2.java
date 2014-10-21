@@ -85,7 +85,7 @@ public class JulioLee2 {
 						// Pateo, si es naranja fuerte y si es azul despacio
 						if (clasificador.getSensado() == ClasificadorPelotas.NARANJA){
 							//Sound.beep();
-							motor_pateador.setSpeed(900);
+							motor_pateador.setSpeed(800);
 						}
 							
 
