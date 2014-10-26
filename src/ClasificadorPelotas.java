@@ -15,7 +15,7 @@ public class ClasificadorPelotas {
 	// la probabilidad de cada clase. Las clases son (en orden): Celeste,
 	// Azul, Naranja A, Naranja N, Nada.
 	// Por ejemplo probabilidades_ocurrencia[0][0] indica la probabilidad de que
-	// dada una pelota celeste, los valores leídos por el sensor RGB cumplan la
+	// dada una pelota celeste, los valores leidos por el sensor RGB cumplan la
 	// propiedad G > R > B.
 	// probabilidades_ocurrencia[3][4] indica la probabilidad de que el valor
 	// devuelto por el sensor cumpla |G - R| > |B - R|, en ausencia de pelotas.
@@ -23,11 +23,8 @@ public class ClasificadorPelotas {
 	// mediciones.
 	// Ademas los numeros van de 0 a 10 en lugar de 0 a 1 para evitar errores
 	// de redondeo.
-	private double[][] probabilidades_ocurrencia = { { 4.4, 0, 9.9, 0.4, 1.2 }, // G
-																				// >
-																				// R
-																				// >
-																				// B
+	private double[][] probabilidades_ocurrencia = { 
+			{ 4.4, 0, 9.9, 0.4, 1.2 },// G > R > B
 			{ 0, 9.5, 10, 1.1, 10 }, // B < 120
 			{ 9.5, 0.2, 0.1, 9.9, 4.5 }, // (B + G)/2 > R
 			{ 9.5, 9.6, 0.1, 5.4, 4.2 }, // |G - R| > |B - R|
@@ -36,10 +33,9 @@ public class ClasificadorPelotas {
 			{ 9.8, 0, 7.5, 4.2, 0 }, // G > 150
 			{ 0.7, 1.7, 0, 9.9, 10 }, // |G - B| < 19
 			{ 0, 0, 0, 0, 10 }, // B < 30
-			{ 9.9, 0, 0, 1.2, 3.3 } ,// D NUEVA
-			{ 0, 0, 0, 9.9, 0 } // P NUEVA
-			
-			//; 
+			{ 9.9, 0, 0, 1.2, 3.3 },// dist(plano ajuste celestes, (R,G,B)) < 6
+			{ 0, 0, 0, 9.9, 0 } // dist(plano ajuste naranja N, (R,G,B)) < 6
+
 	};
 
 	public ClasificadorPelotas(ColorSensor cs) {
@@ -85,8 +81,10 @@ public class ClasificadorPelotas {
 		// cada probabilidad por el peso asignado en el paso previo. Estos
 		// valores no son las probabilidades de que la
 		// medida pertenezca a cada una de las categorías, porque los eventos
-		// que se están midiendo no son
-		// independientes (por ejemplo B < 30 => B < 120).
+		// que se están midiendo no son independientes (por ejemplo B < 30 => B
+		// < 120).
+		// De todas formas los resultados obtenidos experimentalmente para los
+		// datos de muestra son satisfactorios, como explica el informe.
 
 		Color color = sensor_color.getColor();
 		int R = color.getRed();
