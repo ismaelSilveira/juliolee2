@@ -34,9 +34,11 @@ public class Comunicacion implements Runnable {
 	public void run() {
 		while (true) {
 			// espero a que me inicien comunicacion
+			LCD.drawString("esperando conexion", 0, 0);
 			conn = null;
 			conn = conector.waitForConnection(0, NXTConnection.PACKET);
-
+			LCD.drawString("tengo conexion", 0, 0);
+			
 			dis = conn.openDataInputStream();
 			dos = conn.openDataOutputStream();
 			

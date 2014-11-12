@@ -54,6 +54,7 @@ public class JulioLee2 {
 
 		while (true) {
 			if (com.getLectura() == Comunicacion.SENSAR) {
+				com.setLectura(0);
 				// Se mueve el brazo del sensor a la posicion de sensar
 				motor_sensor.setSpeed(300);
 				motor_sensor.rotateTo(0);
@@ -69,6 +70,7 @@ public class JulioLee2 {
 				com.comunicar(clasificador.getSensado());
 
 			} else if (com.getLectura() == Comunicacion.PATEAR) {
+				com.setLectura(0);
 				// Acomodo el sensor
 				motor_sensor.setSpeed(900);
 				motor_sensor.rotateTo(300);
@@ -96,6 +98,7 @@ public class JulioLee2 {
 				// Le aviso que termine
 				com.comunicar(Comunicacion.PATEAR);
 			} else if (com.getLectura() == Comunicacion.DISTANCIA) {
+				com.setLectura(0);
 				com.comunicar(distancia.getDistancia());
 			}
 		}

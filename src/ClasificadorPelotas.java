@@ -2,7 +2,7 @@ import lejos.nxt.ColorSensor;
 import lejos.nxt.ColorSensor.Color;
 
 public class ClasificadorPelotas {
-	public final static int NADA = 0;
+	public final static int NADA = 6;
 	public final static int AZUL = 1;
 	public final static int NARANJA = 2;
 	private int color_sensado;
