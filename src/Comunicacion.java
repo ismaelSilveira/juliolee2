@@ -53,7 +53,6 @@ public class Comunicacion implements Runnable {
 				dos.close();
 				conn.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				// e.printStackTrace();
 				// LCD.drawString("error close", 0, 1);
 				break;
