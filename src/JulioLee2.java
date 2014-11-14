@@ -42,8 +42,9 @@ public class JulioLee2 {
 		Button.LEFT.addButtonListener(new ButtonListener() {
 			@Override
 			public void buttonReleased(Button b) {
-				actuador.move(-200, false);
+				actuador.move(-200, true);
 				motor_sensor.rotateTo(0);
+				System.exit(0);
 			}
 
 			@Override
@@ -63,14 +64,13 @@ public class JulioLee2 {
 				// sigue
 				if (clasificador.getColor() == ClasificadorPelotas.NADA) {
 					motor_sensor.rotateTo(30);
-					// Termino la conexion
-					LCD.drawString("NADA", 2, 0);
 				}
 
 				com.comunicar(clasificador.getSensado());
 
 			} else if (com.getLectura() == Comunicacion.PATEAR) {
 				com.setLectura(0);
+				
 				// Acomodo el sensor
 				motor_sensor.setSpeed(900);
 				motor_sensor.rotateTo(300);
@@ -98,6 +98,7 @@ public class JulioLee2 {
 				// Le aviso que termine
 				com.comunicar(Comunicacion.PATEAR);
 			} else if (com.getLectura() == Comunicacion.DISTANCIA) {
+				
 				com.setLectura(0);
 				com.comunicar(distancia.getDistancia());
 			}
