@@ -11,6 +11,7 @@ import lejos.nxt.addon.LnrActrFirgelliNXT;
 public class JulioLee2 {
 	private static SensorPort PUERTO_COLOR = SensorPort.S3;
 	private static SensorPort PUERTO_DISTANCIA = SensorPort.S2;
+	private static SensorPort PUERTO_BOTON = SensorPort.S1;
 
 	public static void main(String[] args) {
 
@@ -22,6 +23,10 @@ public class JulioLee2 {
 		// Inicializo el sensor
 		ColorSensor sensor = new ColorSensor(PUERTO_COLOR);
 		ClasificadorPelotas clasificador = new ClasificadorPelotas(sensor);
+		
+		// Inicializo boton atras
+		BotonAtras boton = new BotonAtras(PUERTO_BOTON);
+		boton.start();
 
 		// Motor para el brazo del sensor
 		NXTRegulatedMotor motor_sensor = Motor.A;
@@ -97,10 +102,17 @@ public class JulioLee2 {
 
 				// Le aviso que termine
 				com.comunicar(Comunicacion.PATEAR);
+				
 			} else if (com.getLectura() == Comunicacion.DISTANCIA) {
 				
 				com.setLectura(0);
 				com.comunicar(distancia.getDistancia());
+				
+			} else if (com.getLectura() == Comunicacion.BOTON){
+				 
+				com.setLectura(0);
+				com.comunicar(boton.getApretado());
+				
 			}
 		}
 	}
