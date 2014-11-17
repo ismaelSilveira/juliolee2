@@ -47,8 +47,8 @@ public class JulioLee2 {
 		Button.LEFT.addButtonListener(new ButtonListener() {
 			@Override
 			public void buttonReleased(Button b) {
-				actuador.move(-200, true);
-				motor_sensor.rotateTo(0);
+				motor_sensor.rotateTo(0, true);
+				actuador.move(-200, false);
 				System.exit(0);
 			}
 
