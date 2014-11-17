@@ -26,7 +26,7 @@ public class SensorDistancia implements Runnable {
 		while (true) {
 			distancia = sensor.getDistance();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
