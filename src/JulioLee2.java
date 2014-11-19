@@ -6,6 +6,7 @@ import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
 
 public class JulioLee2 {
@@ -104,11 +105,13 @@ public class JulioLee2 {
 				com.comunicar(Comunicacion.PATEAR);
 				
 			} else if (com.getLectura() == Comunicacion.DISTANCIA) {
+				Sound.beep();
 				
 				com.setLectura(0);
 				com.comunicar(distancia.getDistancia());
 				
 			} else if (com.getLectura() == Comunicacion.BOTON){
+				Sound.beepSequence();
 				 
 				com.setLectura(0);
 				com.comunicar(boton.getApretado());
