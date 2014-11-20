@@ -39,16 +39,11 @@ public class Comunicacion implements Runnable {
 			conn = null;
 			conn = conector.waitForConnection(0, NXTConnection.PACKET);
 			LCD.drawString("tengo conexion", 0, 0);
-			
+
 			dis = conn.openDataInputStream();
 			dos = conn.openDataOutputStream();
-			
-			try{
-				while(conn != null){
-					lectura = dis.readInt();
-				}
-			}catch (IOException e){
-				
+
+			while (conn != null) {
 			}
 
 			try {
@@ -77,9 +72,27 @@ public class Comunicacion implements Runnable {
 			dos.writeInt(aComunicar);
 			dos.flush();
 		} catch (IOException e) {
+			conn = null;
 			// e.printStackTrace();
 			LCD.drawString("error escribir", 0, 1);
+			return;
 		}
+	}
+
+	public int leer() {
+		lectura = 0;
+		while (conn == null) {
+		}
+		try {
+			while (lectura == 0) {
+				lectura = dis.readInt();
+			}
+		} catch (IOException e) {
+			conn = null;
+			e.printStackTrace();
+			LCD.drawString("error lectura", 0, 1);
+		}
+		return lectura;
 	}
 
 	/**
@@ -88,13 +101,13 @@ public class Comunicacion implements Runnable {
 	public int getLectura() {
 		return lectura;
 	}
-	
+
 	/**
 	 * setea el valor de lectura
 	 * 
 	 * @param lectura
 	 */
-	public void setLectura(int lectura){
+	public void setLectura(int lectura) {
 		this.lectura = lectura;
 	}
 

@@ -60,6 +60,8 @@ public class JulioLee2 {
 		});
 
 		while (true) {
+			com.leer();
+			
 			if (com.getLectura() == Comunicacion.SENSAR) {
 				com.setLectura(0);
 				// Se mueve el brazo del sensor a la posicion de sensar
@@ -75,6 +77,7 @@ public class JulioLee2 {
 				com.comunicar(clasificador.getSensado());
 
 			} else if (com.getLectura() == Comunicacion.PATEAR) {
+				Sound.beepSequence();
 				com.setLectura(0);
 				
 				// Acomodo el sensor
@@ -86,12 +89,12 @@ public class JulioLee2 {
 				motor_pateador.rotateTo(-40);
 
 				// Pateo, si es naranja fuerte y si es azul despacio
-				if (clasificador.getSensado() == ClasificadorPelotas.NARANJA) {
+				if (clasificador.getSensado() == ClasificadorPelotas.NARANJA) { 
 					// Sound.beep();
 					motor_pateador.setSpeed(450);
 					motor_pateador.rotateTo(10);
 				} else {
-					motor_pateador.rotate(0);
+					motor_pateador.rotateTo(0);
 				}
 
 				// Vuelvo el pateador a la posicion inical
@@ -105,14 +108,10 @@ public class JulioLee2 {
 				com.comunicar(Comunicacion.PATEAR);
 				
 			} else if (com.getLectura() == Comunicacion.DISTANCIA) {
-				Sound.beep();
-				
 				com.setLectura(0);
 				com.comunicar(distancia.getDistancia());
 				
 			} else if (com.getLectura() == Comunicacion.BOTON){
-				Sound.beepSequence();
-				 
 				com.setLectura(0);
 				com.comunicar(boton.getApretado());
 				

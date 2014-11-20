@@ -3,10 +3,12 @@ import lejos.nxt.TouchSensor;
 
 
 public class BotonAtras implements Runnable {
+	private final static int APRETADO = 1;
+	private final static int NO_APRETADO = 2;
 	private Thread t;
 	TouchSensor boton;
-	int apretado = 0;
-	
+	int apretado = NO_APRETADO;
+
 	public BotonAtras(SensorPort puerto){
 		this.boton = new TouchSensor(puerto);
 	}
@@ -21,7 +23,7 @@ public class BotonAtras implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			apretado = boton.isPressed() ? 1 : 0; 
+			apretado = boton.isPressed() ? APRETADO : NO_APRETADO; 
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
