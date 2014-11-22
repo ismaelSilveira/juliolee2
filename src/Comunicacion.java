@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import lejos.nxt.LCD;
+import lejos.nxt.Sound;
 import lejos.nxt.comm.NXTCommConnector;
 import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.RS485;
@@ -49,7 +50,6 @@ public class Comunicacion implements Runnable {
 			try {
 				dis.close();
 				dos.close();
-				conn.close();
 			} catch (IOException e) {
 				// e.printStackTrace();
 				// LCD.drawString("error close", 0, 1);
@@ -75,7 +75,6 @@ public class Comunicacion implements Runnable {
 			conn = null;
 			// e.printStackTrace();
 			LCD.drawString("error escribir", 0, 1);
-			return;
 		}
 	}
 
@@ -89,7 +88,7 @@ public class Comunicacion implements Runnable {
 			}
 		} catch (IOException e) {
 			conn = null;
-			e.printStackTrace();
+			//e.printStackTrace();
 			LCD.drawString("error lectura", 0, 1);
 		}
 		return lectura;

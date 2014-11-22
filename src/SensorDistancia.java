@@ -12,7 +12,7 @@ public class SensorDistancia implements Runnable {
 	
 	public SensorDistancia(LnrActrFirgelliNXT actuador, SensorPort puerto){
 		this.actuador = actuador;
-		this.actuador.move(200, true);
+		//this.actuador.move(200, true);
 		this.sensor = new OpticalDistanceSensor(puerto);
 	}
 	
