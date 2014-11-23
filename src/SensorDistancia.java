@@ -1,6 +1,4 @@
-import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
 import lejos.nxt.addon.OpticalDistanceSensor;
 
@@ -12,7 +10,7 @@ public class SensorDistancia implements Runnable {
 	
 	public SensorDistancia(LnrActrFirgelliNXT actuador, SensorPort puerto){
 		this.actuador = actuador;
-		//this.actuador.move(200, true);
+		this.actuador.move(200, true);
 		this.sensor = new OpticalDistanceSensor(puerto);
 	}
 	

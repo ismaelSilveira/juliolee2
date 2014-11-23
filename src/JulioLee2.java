@@ -1,12 +1,10 @@
 import lejos.nxt.Button;
 import lejos.nxt.ButtonListener;
 import lejos.nxt.ColorSensor;
-import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
 
 public class JulioLee2 {
@@ -48,7 +46,7 @@ public class JulioLee2 {
 		Button.LEFT.addButtonListener(new ButtonListener() {
 			@Override
 			public void buttonReleased(Button b) {
-				//motor_sensor.rotateTo(0, true);
+				motor_sensor.rotateTo(0, true);
 				actuador.move(-200, false);
 				System.exit(0);
 			}
@@ -77,7 +75,6 @@ public class JulioLee2 {
 				com.comunicar(clasificador.getSensado());
 
 			} else if (com.getLectura() == Comunicacion.PATEAR) {
-				Sound.beepSequence();
 				com.setLectura(0);
 				
 				// Acomodo el sensor
