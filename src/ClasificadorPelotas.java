@@ -12,7 +12,7 @@ public class ClasificadorPelotas {
 	// de cada clase verifiquen las propiedades que se chequearan.
 	// Cada arreglo de probabilidades_ocurrencia representa las probabilidades
 	// por clase para cada propiedad. Cada elemento de cada arreglo representa
-	// la probabilidad de cada clase. Las clases son (en orden): Celeste,
+	// la probabilidad de cada clase. Las clases son (en orden): 
 	// Azul, Naranja A, Naranja N, Nada.
 	// Por ejemplo probabilidades_ocurrencia[0][0] indica la probabilidad de que
 	// dada una pelota celeste, los valores leidos por el sensor RGB cumplan la
@@ -24,17 +24,17 @@ public class ClasificadorPelotas {
 	// Ademas los numeros van de 0 a 10 en lugar de 0 a 1 para evitar errores
 	// de redondeo.
 	private double[][] probabilidades_ocurrencia = { 
-			{ 4.4, 0, 9.9, 0.4, 1.2 },// G > R > B
-			{ 0, 9.5, 10, 1.1, 10 }, // B < 120
-			{ 9.5, 0.2, 0.1, 9.9, 4.5 }, // (B + G)/2 > R
-			{ 9.5, 9.6, 0.1, 5.4, 4.2 }, // |G - R| > |B - R|
-			{ 9.9, 0, 9.9, 5.4, 3.9 }, // G > B
-			{ 9.9, 0, 9.9, 9.9, 3.3 }, // G > R
-			{ 9.8, 0, 7.5, 4.2, 0 }, // G > 150
-			{ 0.7, 1.7, 0, 9.9, 10 }, // |G - B| < 19
-			{ 0, 0, 0, 0, 10 }, // B < 30
-			{ 9.9, 0, 0, 1.2, 3.3 },// dist(plano ajuste celestes, (R,G,B)) < 6
-			{ 0, 0, 0, 9.9, 0 } // dist(plano ajuste naranja N, (R,G,B)) < 6
+			{ 0, 9.9, 0.4, 1.2 },// G > R > B
+			{ 9.5, 10, 1.1, 10 }, // B < 120
+			{ 0.2, 0.1, 9.9, 4.5 }, // (B + G)/2 > R
+			{ 9.6, 0.1, 5.4, 4.2 }, // |G - R| > |B - R|
+			{ 0, 9.9, 5.4, 3.9 }, // G > B
+			{ 0, 9.9, 9.9, 3.3 }, // G > R
+			{ 0, 7.5, 4.2, 0 }, // G > 150
+			{ 1.7, 0, 9.9, 10 }, // |G - B| < 19
+			{ 0, 0, 0, 10 }, // B < 30
+			{ 0, 0, 1.2, 3.3 },// dist(plano ajuste celestes, (R,G,B)) < 6
+			{ 0, 0, 9.9, 0 } // dist(plano ajuste naranja N, (R,G,B)) < 6
 
 	};
 
@@ -58,14 +58,13 @@ public class ClasificadorPelotas {
 	public int getColor() {
 		switch (clasificarRGB()) {
 		case 0: // Celeste
-		case 1: // Azul
 			color_sensado = AZUL;
 			break;
-		case 2: // Naranja A
-		case 3: // Naranja N
+		case 1: // Naranja A
+		case 2: // Naranja N
 			color_sensado = NARANJA;
 			break;
-		case 4: // Nada
+		case 3: // Nada
 			color_sensado = NADA;
 		}
 		return color_sensado;
@@ -91,7 +90,7 @@ public class ClasificadorPelotas {
 		int G = color.getGreen();
 		int B = color.getBlue();
 
-		double[] pesos = { 1, 1, 1, 1, 1 }; // Ponderaciones iniciales
+		double[] pesos = { 1, 1, 1, 1 }; // Ponderaciones iniciales
 
 		// Pondero de acuerdo a las probabilidades de que cumpla cada
 		// propiedad...
